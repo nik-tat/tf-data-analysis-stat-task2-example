@@ -10,8 +10,7 @@ def solution(p: float, x: np.array) -> tuple:
     # Измените код этой функции
     # Это будет вашим решением
     # Не меняйте название функции и её аргументы
-    alpha = 1 - p
-    loc = x.mean()
-    scale = np.sqrt(np.var(x)) / np.sqrt(len(x))
-    return loc - scale * norm.ppf(1 - alpha / 2), \
-           loc - scale * norm.ppf(alpha / 2)
+    z = (x ** 2).sum()
+    first = chi2.ppf((p + 1.0) / 2.0, 2 * x.shape[0])
+    second = chi2.ppf((1.0 - p) / 2.0, 2 * x.shape[0])
+    return (z / 45.0 / first) ** (1/2), (z / 45.0 / second) ** (1/2)
